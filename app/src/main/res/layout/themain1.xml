@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+   android:orientation="vertical"
+    tools:context="com.magdy.locus.MainActivity"
+    android:background="#CBCBCB">
+<include
+    layout="@layout/toolbar">
+</include>
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:src="@drawable/fiap_paulista_coworking"
+                android:scaleType="fitStart"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:id="@+id/background1"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/rounded"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:id="@+id/relative1"
+                android:orientation="horizontal"
+                >
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/location_spinner"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="10dp"
+
+                    android:layoutDirection="rtl"
+
+                    />
+                <ImageView
+                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/ic_room_black_24dp"
+                    android:layout_alignRight="@+id/location_spinner"
+
+                    />
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/rounded"
+                android:gravity="center"
+                android:layout_below="@+id/relative1"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                >
+
+
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/people_number_spinner"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layoutDirection="rtl"
+                    android:layout_marginRight="20dp"
+
+
+                    />
+            </RelativeLayout>
+
+            <GridView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/grid1"
+                android:numColumns="auto_fit"
+                android:gravity="center"
+                android:layout_below="@+id/background1"
+                android:layout_marginTop="10dp">
+
+            </GridView>
+
+
+
+        </RelativeLayout>
+        <fragment
+            android:id="@+id/frag"
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+
+            android:name="com.magdy.locus.NavDrawerFragment"
+            tools:layout="@layout/fragment_nav_drawer" />
+
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_details"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context="com.magdy.locus.DetailsActivity"
+    android:background="#bdbdbd"
+    >
+<ScrollView
+    android:layout_height="match_parent"
+    android:layout_width="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:baselineAligned="false"
+        >
+
+
+
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/view_pager"
+        />
+
+     <TextView
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:id="@+id/layout_dots"
+          android:layout_below="@+id/view_pager"
+          android:layout_marginTop="2dp"
+          android:gravity="center"
+          android:orientation="horizontal"
+          />
+
+    <android.support.v7.widget.CardView
+
+        android:layout_below="@+id/layout_dots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:id="@+id/name"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="7dp"
+
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zone"
+            android:layout_gravity="center_horizontal"
+            android:textSize="35dp"
+            android:gravity="center_horizontal" />
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+
+        android:layout_below="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:id="@+id/details"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="7dp"
+
+
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="الوصف:"
+                android:id="@+id/des1"
+
+                android:textSize="20dp"
+
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="sans-serif" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="تقدر تشتغل مع فريقك بالكامل في مكان واحد و تلاقي كل اللي تحتاجه من أجهزة و معدات "
+            android:id="@+id/description"
+            android:layout_below="@+id/des1"
+            android:textSize="20dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif" />
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+
+        android:layout_below="@+id/details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="#FFF"
+        android:id="@+id/table"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="7dp"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:id="@+id/sched_title_layout"
+            >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="الجدول الزمني :"
+            android:layout_marginRight="5dp"
+            android:textSize="25dp"
+            android:layout_weight="1"
+            android:id="@+id/scheduletitle"
+
+            >
+
+            </TextView>
+    <ImageView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_marginRight="5dp"
+        android:id="@+id/iconsched"
+        android:src="@drawable/ic_assignment_black_24dp"
+        android:adjustViewBounds="true"
+        />
+    </LinearLayout>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rooms_list"
+            android:layout_below="@+id/sched_title_layout"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+
+        android:layout_below="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="7dp"
+        android:id="@+id/map_link"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:id="@+id/location_layout"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="الموقع على الخريطة:"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:layout_weight="1"
+                android:id="@+id/locationtitle"
+
+                >
+
+            </TextView>
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="5dp"
+                android:id="@+id/iconlocation"
+                android:src="@drawable/ic_room_black_24dp"
+                android:adjustViewBounds="true"
+                />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="24 شارع شبرا"
+            android:layout_marginRight="10dp"
+            android:textSize="25dp"
+            android:layout_below="@+id/location_layout"
+            android:layout_marginTop="30dp"
+            android:gravity="right"
+            />
+
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+
+        android:layout_below="@+id/map_link"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFF"
+        android:id="@+id/features"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="7dp"
+        android:layout_marginLeft="7dp"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:id="@+id/tools_layout"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="الأدوات المتاحة:"
+                android:layout_marginRight="5dp"
+                android:textSize="25dp"
+                android:layout_weight="1"
+                android:id="@+id/toolstitle"
+
+                >
+
+            </TextView>
+            <ImageView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginRight="5dp"
+                android:id="@+id/icontools"
+                android:src="@drawable/ic_build_black_24dp"
+                android:adjustViewBounds="true"
+                />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>
+</ScrollView>
+  </RelativeLayout>
