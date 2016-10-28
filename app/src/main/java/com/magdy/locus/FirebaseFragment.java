@@ -27,7 +27,7 @@ public class FirebaseFragment extends Fragment {
     String selectedLocation = "shoubra";
     String selectedPlace = "Et3lem w 3lem";
     String selectedRoom = "1";
-    List<String> temp = new ArrayList<String>();
+    //List<String> temp = new ArrayList<String>();
     List<String> time = new ArrayList<String>();
     List<Boolean> ava = new ArrayList<Boolean>();
     private ListCustomAdapter adapter;
@@ -68,7 +68,7 @@ public class FirebaseFragment extends Fragment {
         mSpaceRef = mPlacesRef.child(selectedPlace);
         Log.v("Places Ref", mSpaceRef.getKey());
         mRoomRef = mSpaceRef.child(selectedRoom);
-        changeRoomAvailablity(mRoomRef, "16");
+        //changeRoomAvailablity(mRoomRef, "16");
         fetchRoomSchedule(mRoomRef);
         mSpaceRef.addChildEventListener(new ChildEventListener() {
             @Override

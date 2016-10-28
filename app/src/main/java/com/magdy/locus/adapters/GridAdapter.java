@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.magdy.locus.R;
 import com.magdy.locus.resorces.Place;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,11 +23,11 @@ import static android.R.id.list;
 
 public class GridAdapter extends BaseAdapter {
 
-    List<Bitmap> imgs;
+    List<String> imgs;
     Context context;
     List<Place> txt;
 
-    public GridAdapter(List<Place> txt, List<Bitmap> imgs, Context context) {
+    public GridAdapter(List<Place> txt, List<String> imgs, Context context) {
         this.txt = txt;
         this.imgs = imgs;
         this.context = context;
@@ -58,7 +59,9 @@ public class GridAdapter extends BaseAdapter {
         ImageView img=(ImageView)v.findViewById(R.id.inf_gridimg);
 
         txt1.setText(txt.get(position).getPLACE_NAME());
-        img.setImageBitmap(imgs.get(position));
+        Picasso.with(context)
+                .load(imgs.get(position)).fit()
+                .into(img);
 
         return v;
     }

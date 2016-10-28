@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +17,91 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TableActivity extends AppCompatActivity {
-
-    private CustomAdapter timeAdapter ;
+    String selectedLocation;
+    String selectedPlace ;
+    String selectedRoom ;
+    //List<String> temp = new ArrayList<String>();
+    List<String> time = new ArrayList<String>();
+    List<Boolean> ava = new ArrayList<Boolean>();
+    //private ListCustomAdapter adapter;
+    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();                    // Realtime Database Root
+    DatabaseReference mLocationRef = mRootRef.child("location");
+    DatabaseReference mSelectedLocationRef, mPlacesRef, mSpaceRef, mRoomRef;
+    private CustomAdapter adapter ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_table);
 
         Intent intent = this.getIntent();
-        setTitle(intent.getStringExtra("room").toString());
+        selectedLocation =  (String) intent.getExtras().get("location");
+        selectedPlace =  (String) intent.getExtras().get("place");
+        selectedRoom =  (String) intent.getExtras().get("roomNum");
+
+        setTitle("Room" + selectedRoom);
+        mSelectedLocationRef = mLocationRef.child(selectedLocation);
+        mPlacesRef = mSelectedLocationRef.child("places");
+        mSpaceRef = mPlacesRef.child(selectedPlace);
+        Log.v("Places Ref", mSpaceRef.getKey());
+        mRoomRef = mSpaceRef.child(selectedRoom);
+        //changeRoomAvailablity(mRoomRef, "16");
+        fetchRoomSchedule(mRoomRef);
+        mSpaceRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String roomNumber = dataSnapshot.getKey();
+                //mRoomRef = mSpaceRef.child(selectedRoom);
+                //DatabaseReference mSelectedLocRef = mPlacesRef.child(SelectedLoc);
+//                ava.clear();
+//                time.clear();
+                //fetchPlaces(mRoomRef);
+                Log.v("ROOM_CHILD-ADDED", roomNumber);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                String roomNumber = dataSnapshot.getKey();
+                mRoomRef = mSpaceRef.child(selectedRoom);
+                //DatabaseReference mSelectedLocRef = mPlacesRef.child(SelectedLoc);
+                ava.clear();
+                time.clear();
+                fetchRoomSchedule(mRoomRef);
+                Log.v("LOCATION_CHILD-CHANGED", roomNumber);
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                String roomNumber = dataSnapshot.getKey();
+                mRoomRef = mSpaceRef.child(selectedRoom);
+                //DatabaseReference mSelectedLocRef = mPlacesRef.child(SelectedLoc);
+                fetchRoomSchedule(mRoomRef);
+                ava.clear();
+                time.clear();
+                fetchRoomSchedule(mRoomRef);
+                Log.v("LOCATION_CHILD-REMOVED", roomNumber);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         ListView listView = (ListView)findViewById(R.id.time_list);
         List <String> hours = new ArrayList<String>();
@@ -53,17 +126,106 @@ public class TableActivity extends AppCompatActivity {
         available.add(true);
 
 
-        timeAdapter= new CustomAdapter(this,hours,available);
+        adapter= new CustomAdapter(this,time,ava);
 
-
-        listView.setAdapter(timeAdapter);
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = timeAdapter.getItem(position).toString();
+                String s = adapter.getItem(position).toString();
                 Toast.makeText(getBaseContext(),s,Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getBaseContext(),SigninActivity.class);
-                startActivity(intent);
+            //    Intent intent = new Intent(getBaseContext(),SigninActivity.class);
+             //   startActivity(intent);
+
+            }
+        });
+    }
+    // Fetch Room Schedule From Database
+    void fetchRoomSchedule(DatabaseReference mRef){
+        mRef.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String keyTime = dataSnapshot.getKey();
+                time.add(keyTime);
+                Log.v("5555555555555555555",keyTime);
+                boolean valueAvailablity = (boolean) dataSnapshot.getValue();
+                ava.add(valueAvailablity);
+                adapter.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                String keyTime = dataSnapshot.getKey();
+                time.add(keyTime);
+                boolean valueAvailablity = (boolean) dataSnapshot.getValue();
+                ava.add(valueAvailablity);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                String keyTime = dataSnapshot.getKey();
+                time.add(keyTime);
+                boolean valueAvailablity = (boolean) dataSnapshot.getValue();
+                ava.add(valueAvailablity);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                // IGNORE
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    // Change Room availablity From Database
+    void changeRoomAvailablity(final DatabaseReference mRef, final String hour){
+        mRef.addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                String keyTime = dataSnapshot.getKey();
+                boolean valueAvailablity = (boolean) dataSnapshot.getValue();
+                //time.add(keyTime);
+                if(keyTime.equals(hour)){
+                    DatabaseReference mValueRef = mRef.child(keyTime);
+                    mValueRef.setValue(!valueAvailablity);
+                    ava.add(!valueAvailablity);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//                String keyTime = dataSnapshot.getKey();
+//                time.add(keyTime);
+//                boolean valueAvailablity = (boolean) dataSnapshot.getValue();
+//                ava.add(valueAvailablity);
+//                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//                String keyTime = dataSnapshot.getKey();
+//                time.add(keyTime);
+//                boolean valueAvailablity = (boolean) dataSnapshot.getValue();
+//                ava.add(valueAvailablity);
+//                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                // IGNORE
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -125,4 +287,5 @@ public class TableActivity extends AppCompatActivity {
 
         return convertView1;
     }
+
 }

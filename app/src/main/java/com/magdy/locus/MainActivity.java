@@ -1,5 +1,6 @@
 package com.magdy.locus;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     List<String> noOfPeople = new ArrayList<String>();                                                  // No of People
     List<String> locationsList = new ArrayList<String>();
 
-    List <Bitmap>imgs;
+    List <String>imgs;
     // Locations
 
     SpinnerCustomAdapter locationSpinnerAdapter;
@@ -34,13 +35,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.themain1);
         // imgs= (List<Bitmap>) getIntent().getExtras().get("list");
-        imgs= (List<Bitmap>) getIntent().getExtras().get("list");
+        imgs=new ArrayList<String>();
+        final Dpoepnhelper dpoepnhelper=new Dpoepnhelper(this);
+        for(int i=0;i<dpoepnhelper.getCount();i++)
+        {
+
+
+            imgs.add(dpoepnhelper.getallplaces().get(i).getPLACE_IMG_URL());
+
+
+        }
+   //     imgs= (List<String>) getIntent().getExtras().get("list");
         Log.e("size",imgs.size()+"");
         //imgs.add(R.drawable.ic_room_black_24dp);
         setTitle("الرئيسية");
         Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar);
-        DrawerLayout drawerLayout=(DrawerLayout)findViewById(R.id.drawable);
-        new NavDrawerFragment().setup(drawerLayout,this,toolbar);
+      //  DrawerLayout drawerLayout=(DrawerLayout)findViewById(R.id.drawable);
+      //  new NavDrawerFragment().setup(drawerLayout,this,toolbar);
         /*Toolbar toolbar = (Toolbar) findViewById(R.id)
 
         NavDrawerFragment nav= new NavDrawerFragment();
@@ -52,7 +63,14 @@ public class MainActivity extends AppCompatActivity {
         int [] place_img ={R.drawable.ic_room_black_24dp,R.drawable.ic_room_black_24dp,R.drawable.ic_room_black_24dp,R.drawable.ic_room_black_24dp};
         GridAdapter adapter=new GridAdapter(placedata.getallplaces(),imgs,this);
         view.setAdapter(adapter);
-
+        view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i=new Intent(MainActivity.this,DetailsActivity.class);
+                i.putExtra("pos",position);
+                startActivity(i);
+            }
+        });
         Spinner locationSpinner = (Spinner) findViewById(R.id.location_spinner);
         Spinner peopleNumberSpinner = (Spinner) findViewById(R.id.people_number_spinner);
 
