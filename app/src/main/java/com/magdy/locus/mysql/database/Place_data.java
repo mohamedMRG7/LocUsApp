@@ -122,14 +122,15 @@ public class Place_data {
 				    JSONObject jsonChildNode = jsonMainNode.getJSONObject(i);
 				   
 					   String  place_name = jsonChildNode.optString("place_name");
-					   String Place_desc=jsonChildNode.optString("Place_desc");
+					   String placeDesc =jsonChildNode.optString("place_desc");
+
 					   String place_phone=jsonChildNode.optString("place_phone");
 					   String place_long =jsonChildNode.optString("place_long");
 					   String place_lat =jsonChildNode.optString("place_lat");
                        String place_img_url="http://et7arak.net78.net/"+jsonChildNode.optString("place_img");
-					   Log.e("place names",place_name);
+					   Log.e("place names",placeDesc+"names");
 
-					   Place place=new Place(place_name,Place_desc,place_phone,place_long,place_lat,place_img_url);
+					   Place place=new Place(place_name,placeDesc,place_phone,place_long,place_lat,place_img_url);
 
 
 					   db.addplace(place);

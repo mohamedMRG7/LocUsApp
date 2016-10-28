@@ -12,6 +12,11 @@ public class Place {
       String PLACE_LONGETUDE="longtude";
       String PLACE_IMG_URL;
       String PLACE_LAT;
+
+    public Place(String PLACE_NAME) {
+        this.PLACE_NAME = PLACE_NAME;
+    }
+
     public Place(String PLACE_NAME, String PLACE_DESC, String PLACE_PHONE, String PLACE_LONGETUDE, String PLACE_LAT, String PLACE_IMG_URL) {
         this.PLACE_NAME = PLACE_NAME;
         this.PLACE_DESC = PLACE_DESC;

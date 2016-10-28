@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -36,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.themain1);
         // imgs= (List<Bitmap>) getIntent().getExtras().get("list");
         imgs=new ArrayList<String>();
+        Button signin=(Button)findViewById(R.id.btn_signin);
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,SigninActivity.class));
+            }
+        });
         final Dpoepnhelper dpoepnhelper=new Dpoepnhelper(this);
         for(int i=0;i<dpoepnhelper.getCount();i++)
         {

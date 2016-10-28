@@ -28,8 +28,8 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/username"
-        android:hint="Email or username"/>
+        android:id="@+id/ed_companyname"
+        android:hint="Your Company Name"/>
 </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,10 +48,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:id="@+id/password"
+            android:id="@+id/ed_password"
             android:hint="Password"/>
     </LinearLayout>
     <Button
+        android:id="@+id/btn_dosignin"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="40dp"
@@ -59,7 +60,7 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/rounded_button"
         android:layout_below="@id/passwordlayout"
-        android:text="تسجيل دخول"
+        android:text="Sign in"
         android:textSize="20dp"
         android:textColor="#FFF"
         />

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.magdy.locus.mysql.database.Place_data;
+import com.magdy.locus.resorces.Company_userinfo;
 import com.magdy.locus.sqlite.databas.Dpoepnhelper;
 
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 
 public class Splash_screen extends AppCompatActivity {
 
+    public static Company_userinfo companyUserinfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +25,6 @@ public class Splash_screen extends AppCompatActivity {
 
         // Log.e("places", dpoepnhelper.getCount()+"");
 
-        final List<String> bitmapList=new ArrayList<String>();
 
         new Thread(new Runnable() {
             @Override

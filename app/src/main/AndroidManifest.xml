@@ -31,7 +31,12 @@
         <activity
             android:name=".Firebase"
             android:label="@string/title_activity_firebase"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SigninActivity"
+            android:label="@string/title_activity_signin"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".CompanyActivity"></activity>
     </application>
 
 </manifest>
