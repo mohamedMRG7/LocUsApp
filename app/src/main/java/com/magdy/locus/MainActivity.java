@@ -1,8 +1,6 @@
 package com.magdy.locus;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -10,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
@@ -25,22 +24,63 @@ public class MainActivity extends AppCompatActivity {
 
     List<String> noOfPeople = new ArrayList<String>();                                                  // No of People
     List<String> locationsList = new ArrayList<String>();
-
+    Button signin;
     List <String>imgs;
+    Button myplace;
     // Locations
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(Splash_screen.companyUserinfo.isDidsignin())
+        {
+            signin.setText("Sign Out");
+            myplace.setVisibility(View.VISIBLE);
+            myplace.setEnabled(true);
+
+        }else {signin.setText("Have a place ?");
+            myplace.setVisibility(View.INVISIBLE);
+            myplace.setEnabled(false);
+        }
+
+    }
 
     SpinnerCustomAdapter locationSpinnerAdapter;
     SpinnerCustomAdapter peopleNumberAdapter;
+    String location;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.themain1);
         // imgs= (List<Bitmap>) getIntent().getExtras().get("list");
         imgs=new ArrayList<String>();
-        Button signin=(Button)findViewById(R.id.btn_signin);
+         signin=(Button)findViewById(R.id.btn_signin);
+         myplace=(Button)findViewById(R.id.btn_myplace);
+//        Log.e("das",Splash_screen.companyUserinfo.isDidsignin()+"");
+
+        if(Splash_screen.companyUserinfo.isDidsignin())
+        {
+            signin.setText("Sign Out");
+            myplace.setVisibility(View.VISIBLE);
+            myplace.setEnabled(true);
+
+        }else {signin.setText("Have a place ?");
+            myplace.setVisibility(View.INVISIBLE);
+            myplace.setEnabled(false);
+            }
+    myplace.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(MainActivity.this,CompanyActivity.class));
+        }
+    });
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Splash_screen.companyUserinfo.isDidsignin())
+                {Splash_screen.companyUserinfo.setDidsignin(false);
+                    startActivity(new Intent(MainActivity.this,Splash_screen.class));
+                }else
                 startActivity(new Intent(MainActivity.this,SigninActivity.class));
             }
         });
@@ -68,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         GridView view=(GridView)findViewById(R.id.grid1);
         String [] place_name={"zone","a","b","c","D"};
         Dpoepnhelper placedata=new Dpoepnhelper(this);
-        int [] place_img ={R.drawable.ic_room_black_24dp,R.drawable.ic_room_black_24dp,R.drawable.ic_room_black_24dp,R.drawable.ic_room_black_24dp};
+      //  int [] place_img ={R.drawable.ic_room_black_24dp,R.drawable.ic_room_black_24dp,R.drawable.ic_room_black_24dp,R.drawable.ic_room_black_24dp};
         GridAdapter adapter=new GridAdapter(placedata.getallplaces(),imgs,this);
         view.setAdapter(adapter);
         view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,12 +116,12 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i=new Intent(MainActivity.this,DetailsActivity.class);
                 i.putExtra("pos",position);
+                i.putExtra("loc",location);
                 startActivity(i);
             }
         });
         Spinner locationSpinner = (Spinner) findViewById(R.id.location_spinner);
-        Spinner peopleNumberSpinner = (Spinner) findViewById(R.id.people_number_spinner);
-
+      //  AutoCompleteTextView peopleNumberSpinner = (AutoCompleteTextView) findViewById(R.id.people_number_spinner);
         // Add hint to noOfPeople Spinner
         // noOfPeople.add("Number of People ");
 
@@ -116,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 , R.layout.spinner_item_number
                 , R.id.spinner_item_number_textview
                 , noOfPeople );
-        locationSpinnerAdapter.add("Location");                                     // Add hint to Location Spinner
+       // locationSpinnerAdapter.add("Location");                                     // Add hint to Location Spinner
         peopleNumberAdapter.add("Number of People ");
 
 
@@ -125,9 +165,21 @@ public class MainActivity extends AppCompatActivity {
         locationSpinnerAdapter.setDropDownViewResource(R.layout.spinner_item_locations);
         locationSpinner.setAdapter(locationSpinnerAdapter);
         peopleNumberAdapter.setDropDownViewResource(R.layout.spinner_item_number);
-        peopleNumberSpinner.setAdapter(peopleNumberAdapter);
+       // peopleNumberSpinner.setAdapter(peopleNumberAdapter);
+        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                location=  locationSpinnerAdapter.getItem(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         // No of People Spinner Click Listener
-        peopleNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+     /*   peopleNumberSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position > 0)
@@ -138,6 +190,6 @@ public class MainActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
-        });
+        });*/
     }
 }

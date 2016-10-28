@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:id="@+id/lastname"
-            android:hint="Last name"/>
+            android:hint="Phone number"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/username"
-        android:hint="Email"/>
+        android:hint="Place Location"/>
 </LinearLayout>
 
     <LinearLayout
@@ -89,6 +89,7 @@
             android:hint="Password"/>
     </LinearLayout>
     <Button
+        android:id="@+id/btn_signup"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_marginTop="40dp"
@@ -96,7 +97,7 @@
         android:layout_marginRight="20dp"
         android:background="@drawable/rounded_button"
         android:layout_below="@id/passwordlayout"
-        android:text="تسجيل دخول"
+        android:text="Send request"
         android:textSize="20dp"
         android:textColor="#FFF"
         />

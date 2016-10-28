@@ -61,31 +61,7 @@
                     />
 
             </RelativeLayout>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:background="@drawable/rounded"
-                android:gravity="center"
-                android:layout_below="@+id/relative1"
-                android:layout_marginTop="30dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                >
 
-
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/people_number_spinner"
-                    android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
-                    android:layoutDirection="rtl"
-                    android:layout_marginRight="20dp"
-
-
-                    />
-            </RelativeLayout>
 
             <GridView
                 android:layout_width="match_parent"

@@ -9,6 +9,16 @@ public class Company_userinfo {
     int roomnum;
     String placename;
     String pass;
+    boolean didsignin =false;
+
+    public void setDidsignin(boolean didsignin) {
+        this.didsignin = didsignin;
+    }
+
+    public boolean isDidsignin() {
+
+        return didsignin;
+    }
 
     public int getRoomnum() {
         return roomnum;

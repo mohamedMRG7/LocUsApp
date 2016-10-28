@@ -1,18 +1,11 @@
 package com.magdy.locus;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.magdy.locus.mysql.database.Place_data;
 import com.magdy.locus.resorces.Company_userinfo;
-import com.magdy.locus.sqlite.databas.Dpoepnhelper;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 public class Splash_screen extends AppCompatActivity {
 
@@ -22,9 +15,9 @@ public class Splash_screen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-
+        companyUserinfo=new Company_userinfo(0,null,null);
         // Log.e("places", dpoepnhelper.getCount()+"");
-
+        companyUserinfo.setDidsignin(false);
 
         new Thread(new Runnable() {
             @Override

@@ -2,6 +2,7 @@ package com.magdy.locus;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ import com.magdy.locus.sqlite.databas.Dpoepnhelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DetailsActivity extends AppCompatActivity {
     private ArrayAdapter<String> roomsAdapter ;
@@ -64,6 +67,7 @@ public class DetailsActivity extends AppCompatActivity {
         des=(TextView)findViewById(R.id.description);
         list = (ListView)findViewById(R.id.listview);
 
+        Button map=(Button)findViewById(R.id.btn_opnemap);
 
 
         pics = new int[]{
@@ -74,10 +78,12 @@ public class DetailsActivity extends AppCompatActivity {
         };
         //
         Intent intent=getIntent();
-        int pos=(int)intent.getExtras().get("pos");
+        final int pos=(int)intent.getExtras().get("pos");
 
-        Dpoepnhelper dpoepnhelper=new Dpoepnhelper(this);
-        Place place= dpoepnhelper.getallplaces().get(pos);
+
+        final Dpoepnhelper dpoepnhelper=new Dpoepnhelper(this);
+        final Place place= dpoepnhelper.getallplaces().get(pos);
+
         title.setText(place.getPLACE_NAME());
         Log.e("dsa",place.getPLACE_DESC());
         des.setText(place.getPLACE_DESC());
@@ -88,7 +94,16 @@ public class DetailsActivity extends AppCompatActivity {
         mRoomRef = mSpaceRef.child(selectedRoom);
         //changeRoomAvailablity(mRoomRef, "16");
         fetchRoomSchedule(mRoomRef);
-
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String longtude=dpoepnhelper.getallplaces().get(pos).getPLACE_LONGETUDE();
+                String lat=dpoepnhelper.getallplaces().get(pos).getPLACE_LAT();
+                final Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("geo:0,0?q="+lat+","+longtude+"&z=16 (" + place.getPLACE_NAME() + ")"));
+                startActivity(intent);
+            }
+        });
         mSpaceRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

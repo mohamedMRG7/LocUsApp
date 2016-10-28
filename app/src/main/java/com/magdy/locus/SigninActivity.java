@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.magdy.locus.adapters.ComanyListAdapter;
 import com.magdy.locus.interfacs.Isregested;
 import com.magdy.locus.mysql.database.Sign_in_dp;
 import com.magdy.locus.resorces.Company_userinfo;
@@ -28,6 +27,15 @@ public class SigninActivity extends AppCompatActivity {
         final EditText pass = (EditText) findViewById(R.id.ed_password);
         final Sign_in_dp signInDp = new Sign_in_dp(this);
         Button signin = (Button) findViewById(R.id.btn_dosignin);
+        Button signup = (Button) findViewById(R.id.btn_signup);
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SigninActivity.this, SignUpActivity.class));
+                finish();
+
+            }
+        });
         signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -39,8 +47,9 @@ public class SigninActivity extends AppCompatActivity {
                            Log.e("id", user.getRoomnum() + "");
                            Toast.makeText(getApplicationContext(),"Wellcom "+user.getPlacename()+" :)",Toast.LENGTH_LONG).show();
                            Splash_screen.companyUserinfo=user;
+                           Splash_screen.companyUserinfo.setDidsignin(true);
                            startActivity(new Intent(SigninActivity.this, CompanyActivity.class));
-
+                            finish();
 
                        }catch (Exception e)
                        {
